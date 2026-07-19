@@ -3,6 +3,7 @@ import { useState } from 'react'
 import Step1SetUp from '../components/Step1SetUp'
 import Step2Interview from '../components/Step2Interview'
 import Step3Report from '../components/Step3Report'
+import Navbar from '../components/Navbar'
 
 function InterviewPage() {
     const [step,setStep] = useState(1)
@@ -10,6 +11,7 @@ function InterviewPage() {
 
   return (
     <div className='min-h-screen bg-gray-50'>
+        <Navbar />
         {step===1 && (
             <Step1SetUp onStart={(data)=>{
                 setInterviewData(data);
