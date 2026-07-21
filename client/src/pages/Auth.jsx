@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BsRobot } from "react-icons/bs";
 import { IoSparkles } from "react-icons/io5";
 import { motion } from "motion/react"
@@ -7,10 +7,20 @@ import { signInWithPopup } from 'firebase/auth';
 import { auth, provider } from '../utils/firebase';
 import axios from 'axios';
 import { ServerUrl } from '../App';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setUserData } from '../redux/userSlice';
+import { useNavigate } from 'react-router-dom';
+
 function Auth({isModel = false}) {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const { userData } = useSelector(state => state.user)
+
+    useEffect(() => {
+        if (userData && !isModel) {
+            navigate("/")
+        }
+    }, [userData, isModel, navigate])
 
     const handleGoogleAuth = async () => {
         try {
@@ -53,7 +63,7 @@ function Auth({isModel = false}) {
 
             <h1 className='text-2xl md:text-3xl font-semibold text-center leading-snug mb-4'>
                 Continue with
-                <span className='bg-green-100 text-green-600 px-3 py-1 rounded-full inline-flex items-center gap-2'>
+                <span className='bg-violet-100 text-violet-600 px-3 py-1 rounded-full inline-flex items-center gap-2'>
                     <IoSparkles size={16}/>
                     AI Smart Interview
 

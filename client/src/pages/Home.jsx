@@ -11,7 +11,7 @@ import {
 } from "react-icons/bs";
 import { HiSparkles } from "react-icons/hi";
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AuthModel from '../components/AuthModel';
 import hrImg from "../assets/HR.png";
 import techImg from "../assets/tech.png";
@@ -27,7 +27,15 @@ import Footer from '../components/Footer';
 function Home() {
   const { userData } = useSelector((state) => state.user)
   const [showAuth, setShowAuth] = useState(false);
+  const [pendingPath, setPendingPath] = useState(null);
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (userData && pendingPath) {
+      navigate(pendingPath);
+      setPendingPath(null);
+    }
+  }, [userData, pendingPath, navigate]);
   return (
     <div className='min-h-screen bg-[#f3f3f3] flex flex-col'>
       <Navbar />
@@ -37,7 +45,7 @@ function Home() {
 
           <div className='flex justify-center mb-6'>
             <div className='bg-gray-100 text-gray-600 text-sm px-4 py-2 rounded-full flex items-center gap-2'>
-              <HiSparkles size={16} className="bg-green-50 text-green-600" />
+              <HiSparkles size={16} className="bg-violet-50 text-violet-600" />
               AI Powered Smart Interview Platform
             </div>
 
@@ -51,7 +59,7 @@ function Home() {
               className='text-4xl md:text-6xl font-semibold leading-tight max-w-4xl mx-auto'>
               Practice Interviews with
               <span className='relative inline-block'>
-                <span className='bg-green-100 text-green-600 px-5 py-1 rounded-full'>
+                <span className='bg-violet-100 text-violet-600 px-5 py-1 rounded-full'>
                   AI Intelligence
 
                 </span>
@@ -75,6 +83,7 @@ function Home() {
               <motion.button
                 onClick={() => {
                   if (!userData) {
+                    setPendingPath("/interview")
                     setShowAuth(true)
                     return;
                   }
@@ -90,6 +99,7 @@ function Home() {
               <motion.button
                 onClick={() => {
                   if (!userData) {
+                    setPendingPath("/history")
                     setShowAuth(true)
                     return;
                   }
@@ -133,18 +143,18 @@ function Home() {
                   whileHover={{ rotate: 0, scale: 1.06 }}
 
                   className={`
-        relative bg-white rounded-3xl border-2 border-green-100 
-        hover:border-green-500 p-10 w-80 max-w-[90%] shadow-md hover:shadow-2xl 
+        relative bg-white rounded-3xl border-2 border-violet-100 
+        hover:border-violet-500 p-10 w-80 max-w-[90%] shadow-md hover:shadow-2xl 
         transition-all duration-300
         ${index === 0 ? "rotate-[-4deg]" : ""}
         ${index === 1 ? "rotate-[3deg] md:-mt-6 shadow-xl" : ""}
         ${index === 2 ? "rotate-[-3deg]" : ""}
       `}>
 
-                  <div className='absolute -top-8 left-1/2 -translate-x-1/2 bg-white border-2 border-green-500 text-green-600 w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg'>
+                  <div className='absolute -top-8 left-1/2 -translate-x-1/2 bg-white border-2 border-violet-500 text-violet-600 w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg'>
                     {item.icon}</div>
                   <div className='pt-10 text-center'>
-                    <div className='text-xs text-green-600 font-semibold mb-2 tracking-wider'>{item.step}</div>
+                    <div className='text-xs text-violet-600 font-semibold mb-2 tracking-wider'>{item.step}</div>
                     <h3 className='font-semibold mb-3 text-lg'>{item.title}</h3>
                     <p className='text-sm text-gray-500 leading-relaxed'>{item.desc}</p>
                   </div>
@@ -163,7 +173,7 @@ function Home() {
               transition={{ duration: 0.6 }}
               className='text-4xl font-semibold text-center mb-16'>
               Advanced AI{" "}
-              <span className="text-green-600">Capabilities</span>
+              <span className="text-violet-600">Capabilities</span>
 
             </motion.h2>
 
@@ -207,7 +217,7 @@ function Home() {
                       </div>
 
                       <div className='w-full md:w-1/2'>
-                        <div className='bg-green-50 text-green-600 w-12 h-12 rounded-xl flex items-center justify-center mb-6'>
+                        <div className='bg-violet-50 text-violet-600 w-12 h-12 rounded-xl flex items-center justify-center mb-6'>
                           {item.icon}
                         </div>
                         <h3 className='font-semibold mb-3 text-xl'>{item.title}</h3>
@@ -232,7 +242,7 @@ function Home() {
               transition={{ duration: 0.6 }}
               className='text-4xl font-semibold text-center mb-16'>
               Multiple Interview{" "}
-              <span className="text-green-600">Modes</span>
+              <span className="text-violet-600">Modes</span>
 
             </motion.h2>
 
